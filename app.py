@@ -2,8 +2,10 @@ import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
 import joblib
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # --- Training (run once at startup) ---
 df_train = pd.read_csv("./train.csv")
@@ -27,13 +29,11 @@ knn.fit(X_train, y_train)
 joblib.dump(knn, "wifi_model.pkl")
 print("✅ Model trained on all scans and saved as wifi_model.pkl")
 
-# --- Flask route ---
 @app.route('/getlocation', methods=['POST'])
 def get_location():
     data = request.get_json()
     df_test = pd.DataFrame(data)
     df_test['BSSID'] = df_test['BSSID'].astype(str).str.strip().str.lower()
-    # Group all rows as a single scan
     feature = [df_test.set_index('BSSID').get('Signal Strength dBm').get(bssid, -100) for bssid in all_bssids]
     y_pred = knn.predict([feature])
     return jsonify([{"predicted": y_pred[0]}])
@@ -42,5 +42,6 @@ def get_location():
 def get():
     return jsonify([{"predicted": "Hello from Flask"}])
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# REMOVE app.run() for production!
+
+
