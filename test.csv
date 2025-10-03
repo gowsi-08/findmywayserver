@@ -1,0 +1,201 @@
+Location,BSSID,Frequency MHz,Bandwidth MHz,Signal Strength dBm,Estimated Distance m
+principal office cooler,54:07:7d:40:2d:88,2412,20,-59,8.8
+principal office cooler,54:07:7d:54:97:48,2462,20,-65,17.2
+principal office cooler,54:07:7d:40:2d:a8,5805,40,-75,23.1
+principal office cooler,54:07:7d:54:86:48,2437,20,-75,55
+principal office cooler,54:07:7d:54:97:68,5300,40,-76,28.4
+principal office cooler,54:07:7d:51:15:88,2412,20,-84,156.7
+principal office cooler,54:07:7d:50:91:c8,2412,20,-85,175.8
+principal office cooler,9c:c9:eb:bb:ba:a8,5280,40,-86,90.1
+principal office cooler,54:07:7d:40:c7:28,5220,40,-87,102.3
+principal office cooler,54:07:7d:40:f2:28,5785,40,-87,92.3
+first year entrance stairs,54:07:7d:40:2d:a8,5805,40,-76,25.9
+first year entrance stairs,54:07:7d:51:15:88,2412,20,-77,70
+first year entrance stairs,54:07:7d:54:97:68,5300,40,-81,50.5
+first year entrance stairs,54:07:7d:40:2d:88,2412,20,-82,124.5
+first year entrance stairs,54:07:7d:51:15:88,2412,20,-82,124.5
+first year entrance stairs,54:07:7d:51:15:88,5180,40,-82,58
+first year entrance stairs,54:07:7d:54:97:48,2462,20,-82,122
+first year entrance stairs,54:07:7d:40:f2:28,5785,40,-86,82.3
+gowsi lunch spot,54:07:7d:54:9c:28,5180,40,-47,1
+gowsi lunch spot,54:07:7d:54:9c:08,2437,20,-51,3.5
+gowsi lunch spot,54:07:7d:50:bb:c8,2462,20,-69,27.3
+gowsi lunch spot,54:07:7d:50:bb:e8,5745,40,-74,20.8
+gowsi lunch spot,54:07:7d:3f:be:c8,2412,20,-78,78.5
+gowsi lunch spot,54:07:7d:51:a0:c8,2412,20,-81,110.9
+cloud lab outside,54:07:7d:50:6f:68,5745,40,-57,2.9
+cloud lab outside,54:07:7d:50:f1:68,2462,20,-62,12.2
+cloud lab outside,54:07:7d:51:91:48,2412,20,-67,22.1
+cloud lab outside,54:07:7d:50:b6:08,2412,20,-68,24.8
+cloud lab outside,54:07:7d:40:74:88,2462,20,-69,27.3
+cloud lab outside,54:07:7d:50:b6:28,5180,40,-75,25.9
+cloud lab outside,54:07:7d:50:75:48,2437,20,-77,69.3
+cloud lab outside,54:07:7d:54:e9:08,2462,20,-77,70
+cloud lab outside,54:07:7d:54:c1:48,2412,20,-78,78.5
+D1 outside,54:07:7d:50:6f:68,5745,40,-62,5.2
+D1 outside,4e:55:f5:8d:65:e8,2437,20,-76,61.8
+D1 outside,54:07:7d:51:34:68,5180,40,-80,46
+D1 outside,54:07:7d:40:c7:08,2437,20,-81,109.8
+D1 outside,54:07:7d:54:9c:28,5180,40,-82,58
+D1 outside,54:07:7d:40:c7:28,5220,40,-84,72.4
+D1 outside,54:07:7d:80:bf:a8,5180,40,-92,183.3
+D1 outside,82:41:0e:b8:f2:2b,5180,40,-96,290.5
+d1 inside,54:07:7d:50:6f:48,2462,20,-54,4.9
+d1 inside,54:07:7d:50:6f:68,5745,40,-65,7.4
+d1 inside,54:07:7d:54:9c:28,5180,40,-79,41
+d1 inside,54:07:7d:51:34:48,2462,20,-86,193.3
+d1 inside,54:07:7d:54:9c:08,2437,20,-86,195.3
+d1 inside,54:07:7d:51:34:68,5180,40,-91,163.4
+d1 inside,54:07:7d:50:bb:c8,2462,20,-96,611.2
+d2 outside,54:07:7d:50:6f:68,5745,40,-53,1.9
+d2 outside,54:07:7d:54:c1:48,2412,20,-53,4.4
+d2 outside,54:07:7d:50:6f:48,2462,20,-56,6.1
+d2 outside,54:07:7d:51:34:48,2462,20,-58,7.7
+d2 outside,54:07:7d:50:bb:c8,2462,20,-68,24.3
+d2 outside,30:e3:a4:27:95:2f,2412,20,-69,27.9
+d2 outside,54:07:7d:51:34:68,5180,40,-72,18.3
+d2 outside,54:07:7d:54:c1:68,5260,40,-72,18.1
+d2 inside,e6:cc:dc:38:3c:82,2437,20,-51,3.5
+d2 inside,66:6a:c9:d5:c0:fa,2462,20,-54,4.9
+d2 inside,54:07:7d:50:6f:48,2462,20,-56,6.1
+d2 inside,54:07:7d:50:6f:68,5745,40,-63,5.9
+d2 inside,54:07:7d:51:34:48,2462,20,-73,43.3
+d2 inside,be:36:f1:58:3a:05,2437,20,-77,69.3
+d2 inside,54:07:7d:51:34:68,5180,40,-79,41
+d2 inside,54:07:7d:54:c1:48,2412,20,-85,175.8
+First year entrance,54:07:7d:51:15:b8,2412,20,-66,19.7
+First year entrance,54:07:7d:51:15:a8,5180,40,-74,23.1
+First year entrance,54:07:7d:51:15:b8,2412,20,-76,62.4
+First year entrance,54:07:7d:40:c7:08,2437,20,-77,69.3
+First year entrance,54:07:7d:50:91:c8,2412,20,-77,70
+First year entrance,54:07:7d:40:f5:48,2437,20,-82,123.2
+First year entrance,54:07:7d:40:c7:28,5220,40,-83,64.5
+First year entrance,54:07:7d:51:01:48,2462,20,-83,136.8
+First year entrance,54:07:7d:40:2d:a8,5805,40,-84,65.1
+mad lab inside,54:07:7d:50:b5:88,2412,20,-45,1.8
+mad lab inside,54:07:7d:50:b5:88,5745,40,-54,2.1
+mad lab inside,54:07:7d:51:7a:a8,5805,40,-60,4.1
+mad lab inside,54:07:7d:51:15:b8,2412,20,-66,19.7
+mad lab inside,54:07:7d:51:15:a8,5180,40,-68,11.6
+mad lab inside,54:07:7d:40:c7:08,2437,20,-70,30.9
+mad lab inside,54:07:7d:51:09:c8,2437,20,-70,30.9
+mad lab inside,54:07:7d:51:09:e8,5220,40,-73,20.4
+mad lab inside,54:07:7d:50:91:e8,5745,40,-74,20.8
+mad lab inside,54:07:7d:40:f5:48,2437,20,-75,55
+hod room inside,54:07:7d:50:bb:c8,2462,20,-79,86.3
+hod room inside,54:07:7d:3f:a0:c8,2412,20,-81,110.9
+hod room inside,54:07:7d:40:c7:28,5220,40,-84,72.4
+hod room inside,54:07:7d:51:34:68,5180,40,-86,91.9
+hod room inside,54:07:7d:50:bb:e8,5745,40,-87,92
+hod room inside,54:07:7d:51:01:48,2462,20,-87,216.9
+hod room inside,54:07:7d:40:c7:08,2437,20,-90,309.5
+hod room inside,54:07:7d:40:bf:88,2412,20,-91,350.9
+hod room inside,54:07:7d:50:93:08,2412,20,-94,495.6
+hod room inside,54:07:7d:50:c7:08,2437,20,-95,550.4
+iot outside,54:07:7d:50:b5:88,2412,20,-62,12.4
+iot outside,54:07:7d:50:b5:88,5745,40,-67,9.3
+iot outside,54:07:7d:51:09:c8,2437,20,-68,24.6
+iot outside,54:07:7d:51:15:b8,2412,20,-68,24.8
+iot outside,54:07:7d:51:15:a8,5180,40,-70,14.6
+iot outside,54:07:7d:40:c7:08,2437,20,-73,43.7
+iot outside,54:07:7d:54:97:48,2462,20,-75,54.5
+iot outside,54:07:7d:50:91:c8,2412,20,-76,62.4
+iot outside,54:07:7d:51:01:48,2462,20,-77,68.6
+iot outside,54:07:7d:51:09:e8,5220,40,-77,32.3
+cse Hod office outside,54:07:7d:54:9c:08,2437,20,-44,1.6
+cse Hod office outside,54:07:7d:54:9c:28,5180,40,-46,0.9
+cse Hod office outside,54:07:7d:50:bb:c8,2462,20,-69,27.3
+cse Hod office outside,54:07:7d:3f:a0:c8,2412,20,-71,35.1
+cse Hod office outside,ce:6d:4b:4f:46:47,2462,20,-72,38.5
+cse Hod office outside,54:07:7d:51:01:48,2462,20,-74,48.6
+cse Hod office outside,54:07:7d:50:6f:68,5745,40,-78,33
+cse Hod office outside,54:b8:0a:3a:23:70,2462,20,-81,108.7
+muthulakshmi mam cabin,54:07:7d:54:c1:48,2412,20,-65,17.6
+muthulakshmi mam cabin,54:07:7d:51:91:48,2412,20,-69,27.9
+muthulakshmi mam cabin,54:07:7d:50:b6:28,5180,40,-70,14.6
+muthulakshmi mam cabin,54:07:7d:54:c1:68,5260,40,-70,14.3
+muthulakshmi mam cabin,54:07:7d:50:6f:68,5745,40,-72,18.5
+muthulakshmi mam cabin,54:07:7d:50:e7:08,2437,20,-72,39
+muthulakshmi mam cabin,54:07:7d:50:6f:48,2462,20,-73,43.3
+muthulakshmi mam cabin,54:07:7d:50:b6:08,2412,20,-75,55.6
+muthulakshmi mam cabin,54:07:7d:40:bf:88,2412,20,-77,70
+muthulakshmi mam cabin,54:07:7d:51:42:c8,2412,20,-78,78.5
+visual computing lab outside,54:07:7d:50:b6:28,5180,40,-60,4.6
+visual computing lab outside,54:07:7d:51:91:68,2412,20,-65,17.6
+visual computing lab outside,54:07:7d:50:6f:48,2462,20,-67,21.7
+visual computing lab outside,54:07:7d:50:b6:08,2412,20,-67,22.1
+visual computing lab outside,54:07:7d:40:bf:88,2412,20,-74,49.6
+visual computing lab outside,54:07:7d:50:6f:68,5745,40,-74,20.8
+visual computing lab outside,54:07:7d:54:c1:48,2412,20,-78,78.5
+visual computing lab outside,54:07:7d:40:74:88,2462,20,-80,96.9
+visual computing lab outside,54:07:7d:51:34:48,2462,20,-80,96.9
+visual computing lab outside,54:07:7d:51:91:68,5180,40,-82,58
+python lab outside,54:07:7d:40:c7:08,2437,20,-54,4.9
+python lab outside,54:07:7d:40:f5:48,2437,20,-55,5.5
+python lab outside,54:07:7d:40:c7:28,5220,40,-60,4.6
+python lab outside,54:07:7d:50:b5:88,2412,20,-67,22.1
+python lab outside,54:07:7d:51:15:b8,2412,20,-69,27.9
+python lab outside,54:07:7d:51:15:a8,5180,40,-70,14.6
+python lab outside,54:07:7d:51:09:c8,2437,20,-72,39
+python lab outside,54:07:7d:40:f5:68,5300,40,-77,31.9
+python lab outside,54:07:7d:50:b5:a8,5745,40,-77,29.4
+python lab outside,54:07:7d:51:01:68,5745,40,-79,37
+staffroom near hod room ,54:07:7d:54:9c:28,5180,40,-44,0.7
+staffroom near hod room ,54:07:7d:54:9c:08,2437,20,-51,3.5
+staffroom near hod room ,54:07:7d:50:bb:c8,2462,20,-57,6.9
+staffroom near hod room ,54:07:7d:50:6f:48,2462,20,-63,13.7
+staffroom near hod room ,54:07:7d:50:6f:68,5745,40,-67,9.3
+staffroom near hod room ,54:07:7d:51:34:68,5180,40,-70,14.6
+staffroom near hod room ,54:07:7d:40:bf:a8,5180,40,-72,18.3
+staffroom near hod room ,54:07:7d:51:34:48,2462,20,-73,43.3
+staffroom near hod room ,54:07:7d:50:bb:e8,5745,40,-77,29.4
+staffroom near hod room ,54:07:7d:3f:a0:c8,2412,20,-78,78.5
+student counselor office,54:07:7d:40:c7:08,2437,20,-33,0.4
+student counselor office,54:07:7d:40:c7:28,5220,40,-36,0.3
+student counselor office,54:07:7d:40:f5:48,2437,20,-57,6.9
+student counselor office,54:07:7d:51:01:48,2462,20,-61,10.9
+student counselor office,54:07:7d:51:15:b8,2412,20,-64,15.7
+student counselor office,54:07:7d:51:15:a8,5180,40,-65,8.2
+student counselor office,54:07:7d:40:f5:68,5300,40,-71,16
+student counselor office,54:07:7d:51:01:68,5745,40,-75,23.3
+student counselor office,54:07:7d:51:7a:a8,5805,40,-79,36.6
+student counselor office,54:07:7d:50:b5:a8,5745,40,-80,41.5
+programming lab outside,54:07:7d:50:6f:48,2462,20,-61,10.9
+programming lab outside,54:07:7d:50:6f:68,5745,40,-68,10.4
+programming lab outside,54:07:7d:50:b6:28,5180,40,-68,11.6
+programming lab outside,54:07:7d:50:75:a8,2437,20,-75,55
+programming lab outside,54:07:7d:40:74:88,2462,20,-76,61.1
+programming lab outside,54:07:7d:3f:7e:08,2462,20,-79,86.3
+programming lab outside,54:07:7d:40:bf:88,2412,20,-82,124.5
+programming lab outside,54:07:7d:51:34:48,2462,20,-84,153.5
+programming lab outside,54:07:7d:54:c1:68,5260,40,-90,143.4
+programming lab outside,54:07:7d:50:bb:c8,2462,20,-96,611.2
+uma mam cabin and pg5 outside,54:07:7d:54:c1:48,2412,20,-57,7
+uma mam cabin and pg5 outside,54:07:7d:54:c1:68,5260,40,-64,7.2
+uma mam cabin and pg5 outside,54:07:7d:50:6f:68,5745,40,-70,13.1
+uma mam cabin and pg5 outside,54:07:7d:50:e7:08,2437,20,-72,39
+uma mam cabin and pg5 outside,54:07:7d:50:b6:28,5180,40,-74,23.1
+uma mam cabin and pg5 outside,54:07:7d:51:91:48,2412,20,-75,55.6
+uma mam cabin and pg5 outside,54:07:7d:51:42:c8,2412,20,-76,62.4
+uma mam cabin and pg5 outside,54:07:7d:50:6f:48,2462,20,-80,96.9
+uma mam cabin and pg5 outside,54:07:7d:50:b6:08,2412,20,-80,98.9
+uma mam cabin and pg5 outside,54:07:7d:50:bb:c8,2462,20,-83,136.8
+product development lab,54:07:7d:54:c1:48,2412,20,-44,1.6
+product development lab,54:07:7d:50:b6:28,5180,40,-59,4.1
+product development lab,54:07:7d:54:9c:08,2437,20,-63,13.8
+product development lab,54:07:7d:50:b6:08,2412,20,-67,22.1
+product development lab,54:07:7d:54:9c:28,5180,40,-70,14.6
+product development lab,54:07:7d:50:6f:68,5745,40,-72,16.5
+product development lab,54:07:7d:51:42:c8,2412,20,-72,39.4
+product development lab,54:07:7d:40:74:88,2462,20,-74,48.6
+product development lab,54:07:7d:51:91:48,2412,20,-77,70
+product development lab,54:07:7d:3f:a0:c8,2412,20,-81,110.9
+C17 inside,54:07:7d:51:09:c8,2437,20,-63,13.8
+C17 inside,54:07:7d:51:09:e8,5220,40,-74,22.9
+C17 inside,54:07:7d:40:2d:88,2412,20,-83,139.7
+C17 inside,54:07:7d:40:2d:a8,5805,40,-85,73.1
+C17 inside,54:07:7d:51:7a:88,2462,20,-89,273
+C17 inside,9c:c9:eb:bb:ba:a8,5280,40,-92,179.8
+C17 inside,54:07:7d:50:91:c8,5745,40,-94,208.1
+C17 inside,54:07:7d:51:09:c8,2437,20,-94,490.5
+C17 inside,54:07:7d:51:15:88,2412,20,-96,623.9
