@@ -94,6 +94,21 @@ def get_location():
 def get():
     return jsonify([{"predicted": "Hello from Flask"}])
 
+@app.route('/admin/testdata', methods=['GET'])
+def get_test_data():
+    # Return test data from test.csv as JSON
+    try:
+        df_test = pd.read_csv('test.csv')
+        # Optionally preprocess as in training
+        df_test['BSSID'] = df_test['BSSID'].astype(str).str.strip().str.lower()
+        if 'Location' in df_test.columns:
+            df_test['Location'] = df_test['Location'].astype(str).str.strip().str.lower()
+        # Convert to list of dicts
+        data = df_test.to_dict(orient='records')
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 404
+
 # REMOVE app.run() for production!
 
 
