@@ -111,4 +111,5 @@ def get_test_data():
 
 # REMOVE app.run() for production!
 
-
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)
