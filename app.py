@@ -19,7 +19,8 @@ class Location(db.Model):
     x = db.Column(db.Float, nullable=False)
     y = db.Column(db.Float, nullable=False)
 
-db.create_all()
+with app.app_context():
+    db.create_all()
 
 # --- Training (run once at startup) ---
 df_train = pd.read_csv("./train.csv")
@@ -111,5 +112,5 @@ def get_test_data():
 
 # REMOVE app.run() for production!
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+# if __name__ == '__main__':
+#     app.run(debug=True, host='0.0.0.0', port=5000)
