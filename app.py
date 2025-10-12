@@ -15,6 +15,7 @@ db = SQLAlchemy(app)
 # --- Location Model ---
 class Location(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    floor = db.Column(db.String(80), nullable=False)
     name = db.Column(db.String(80), nullable=False)
     x = db.Column(db.Float, nullable=False)
     y = db.Column(db.Float, nullable=False)
@@ -46,9 +47,9 @@ print("✅ Model trained on all scans and saved as wifi_model.pkl")
 
 # --- Admin Endpoints ---
 
-# --- Upload Map ---
-@app.route('/admin/upload_map', methods=['POST'])
-def upload_map():
+# --- Upload Map for a Floor ---
+@app.route('/admin/upload_map/<floor>', methods=['POST'])
+def upload_map(floor):
     if 'file' not in request.files:
         return jsonify({'error': 'No file part'}), 400
     file = request.files['file']
@@ -56,32 +57,32 @@ def upload_map():
         return jsonify({'error': 'No selected file'}), 400
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
         os.makedirs(app.config['UPLOAD_FOLDER'])
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'map.png')
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], f'map_{floor}.png')
     file.save(filepath)
     return jsonify({'success': True})
 
-# --- Get Map Image ---
-@app.route('/admin/map_image', methods=['GET'])
-def get_map_image():
-    return send_from_directory(app.config['UPLOAD_FOLDER'], 'map.png')
+# --- Get Map Image for a Floor ---
+@app.route('/admin/map_image/<floor>', methods=['GET'])
+def get_map_image(floor):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], f'map_{floor}.png')
 
-# --- Get All Locations ---
-@app.route('/admin/locations', methods=['GET'])
-def get_locations():
-    locs = Location.query.all()
+# --- Get All Locations for a Floor ---
+@app.route('/admin/locations/<floor>', methods=['GET'])
+def get_locations(floor):
+    locs = Location.query.filter_by(floor=floor).all()
     return jsonify([
         {'id': loc.id, 'name': loc.name, 'x': loc.x, 'y': loc.y}
         for loc in locs
     ])
 
-# --- Add or Update Locations ---
-@app.route('/admin/locations', methods=['POST'])
-def save_locations():
+# --- Add or Update Locations for a Floor ---
+@app.route('/admin/locations/<floor>', methods=['POST'])
+def save_locations(floor):
     data = request.get_json()  # [{'id':..., 'name':..., 'x':..., 'y':...}, ...]
-    # Remove all and re-add for simplicity
-    Location.query.delete()
+    # Remove all for this floor and re-add
+    Location.query.filter_by(floor=floor).delete()
     for loc in data:
-        db.session.add(Location(name=loc['name'], x=loc['x'], y=loc['y']))
+        db.session.add(Location(floor=floor, name=loc['name'], x=loc['x'], y=loc['y']))
     db.session.commit()
     return jsonify({'success': True})
 
