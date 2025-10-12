@@ -12,7 +12,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///admin.db'
 app.config['UPLOAD_FOLDER'] = 'uploads'
 db = SQLAlchemy(app)
 
-# --- Models ---
+# --- Location Model ---
 class Location(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
@@ -46,6 +46,7 @@ print("✅ Model trained on all scans and saved as wifi_model.pkl")
 
 # --- Admin Endpoints ---
 
+# --- Upload Map ---
 @app.route('/admin/upload_map', methods=['POST'])
 def upload_map():
     if 'file' not in request.files:
@@ -57,29 +58,55 @@ def upload_map():
         os.makedirs(app.config['UPLOAD_FOLDER'])
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], 'map.png')
     file.save(filepath)
-    return jsonify({'success': True, 'url': '/admin/map_image'})
+    return jsonify({'success': True})
 
+# --- Get Map Image ---
 @app.route('/admin/map_image', methods=['GET'])
 def get_map_image():
     return send_from_directory(app.config['UPLOAD_FOLDER'], 'map.png')
 
+# --- Get All Locations ---
+@app.route('/admin/locations', methods=['GET'])
+def get_locations():
+    locs = Location.query.all()
+    return jsonify([
+        {'id': loc.id, 'name': loc.name, 'x': loc.x, 'y': loc.y}
+        for loc in locs
+    ])
+
+# --- Add or Update Locations ---
 @app.route('/admin/locations', methods=['POST'])
 def save_locations():
-    data = request.get_json()
-    # data: [{'name': ..., 'x': ..., 'y': ...}, ...]
+    data = request.get_json()  # [{'id':..., 'name':..., 'x':..., 'y':...}, ...]
+    # Remove all and re-add for simplicity
     Location.query.delete()
     for loc in data:
         db.session.add(Location(name=loc['name'], x=loc['x'], y=loc['y']))
     db.session.commit()
     return jsonify({'success': True})
 
-@app.route('/admin/locations', methods=['GET'])
-def get_locations():
-    locs = Location.query.all()
-    return jsonify([
-        {'name': loc.name, 'x': loc.x, 'y': loc.y}
-        for loc in locs
-    ])
+# --- Edit Location ---
+@app.route('/admin/location/<int:loc_id>', methods=['PUT'])
+def edit_location(loc_id):
+    data = request.get_json()
+    loc = Location.query.get(loc_id)
+    if not loc:
+        return jsonify({'error': 'Location not found'}), 404
+    loc.name = data.get('name', loc.name)
+    loc.x = data.get('x', loc.x)
+    loc.y = data.get('y', loc.y)
+    db.session.commit()
+    return jsonify({'success': True})
+
+# --- Delete Location ---
+@app.route('/admin/location/<int:loc_id>', methods=['DELETE'])
+def delete_location(loc_id):
+    loc = Location.query.get(loc_id)
+    if not loc:
+        return jsonify({'error': 'Location not found'}), 404
+    db.session.delete(loc)
+    db.session.commit()
+    return jsonify({'success': True})
 
 # --- Existing getlocation endpoint ---
 @app.route('/getlocation', methods=['POST'])
@@ -91,10 +118,12 @@ def get_location():
     y_pred = knn.predict([feature])
     return jsonify([{"predicted": y_pred[0]}])
 
+#working on hello endpoint
 @app.route('/getHello', methods=['POST'])
 def get():
     return jsonify([{"predicted": "Hello from Flask"}])
 
+#working on test data endpoint
 @app.route('/admin/testdata', methods=['GET'])
 def get_test_data():
     # Return test data from test.csv as JSON
