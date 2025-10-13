@@ -1,51 +1,24 @@
 import os
 import pandas as pd
-from sklearn.neighbors import KNeighborsClassifier
-import joblib
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
+from pymongo import MongoClient
+import gridfs
+from bson import ObjectId
+from io import BytesIO
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///admin.db'
-app.config['UPLOAD_FOLDER'] = 'uploads'
-db = SQLAlchemy(app)
 
-# --- Location Model ---
-class Location(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    floor = db.Column(db.String(80), nullable=False)
-    name = db.Column(db.String(80), nullable=False)
-    x = db.Column(db.Float, nullable=False)
-    y = db.Column(db.Float, nullable=False)
+# --- MongoDB Setup ---
+mongo_url = "mongodb+srv://selva:selva2004@cluster0.wo0nx.mongodb.net/"
+client = MongoClient(mongo_url)
+db = client['findmyway']
+fs = gridfs.GridFS(db)
 
-with app.app_context():
-    db.create_all()
-
-# --- Training (run once at startup) ---
-df_train = pd.read_csv("./train.csv")
-df_train['Location'] = df_train['Location'].astype(str).str.strip().str.lower()
-df_train['BSSID'] = df_train['BSSID'].astype(str).str.strip().str.lower()
-all_bssids = sorted(df_train['BSSID'].unique())
-
-def build_feature_vector(group, bssid_list):
-    bssid_to_signal = dict(zip(group['BSSID'], group['Signal Strength dBm']))
-    return [bssid_to_signal.get(bssid, -100) for bssid in bssid_list]
-
-X_train = []
-y_train = []
-for idx, row in df_train.iterrows():
-    feature = [row['Signal Strength dBm'] if bssid == row['BSSID'] else -100 for bssid in all_bssids]
-    X_train.append(feature)
-    y_train.append(row['Location'])
-
-knn = KNeighborsClassifier(n_neighbors=3)
-knn.fit(X_train, y_train)
-joblib.dump(knn, "wifi_model.pkl")
-print("✅ Model trained on all scans and saved as wifi_model.pkl")
-
-# --- Admin Endpoints ---
+# --- Location Model in MongoDB ---
+# Collection: locations
+# Fields: floor, name, x, y
 
 # --- Upload Map for a Floor ---
 @app.route('/admin/upload_map/<floor>', methods=['POST'])
@@ -55,86 +28,69 @@ def upload_map(floor):
     file = request.files['file']
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
-    if not os.path.exists(app.config['UPLOAD_FOLDER']):
-        os.makedirs(app.config['UPLOAD_FOLDER'])
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], f'map_{floor}.png')
-    file.save(filepath)
+    # Remove old map for this floor
+    db.maps.delete_many({'floor': floor})
+    # Save image to GridFS
+    file_id = fs.put(file, filename=f'map_{floor}.png')
+    db.maps.insert_one({'floor': floor, 'file_id': file_id})
     return jsonify({'success': True})
 
 # --- Get Map Image for a Floor ---
 @app.route('/admin/map_image/<floor>', methods=['GET'])
 def get_map_image(floor):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], f'map_{floor}.png')
+    map_doc = db.maps.find_one({'floor': floor})
+    if not map_doc:
+        return jsonify({'error': 'Map not found'}), 404
+    file_id = map_doc['file_id']
+    grid_out = fs.get(file_id)
+    return send_file(BytesIO(grid_out.read()), mimetype='image/png')
 
 # --- Get All Locations for a Floor ---
 @app.route('/admin/locations/<floor>', methods=['GET'])
 def get_locations(floor):
-    locs = Location.query.filter_by(floor=floor).all()
+    locs = list(db.locations.find({'floor': floor}))
     return jsonify([
-        {'id': loc.id, 'name': loc.name, 'x': loc.x, 'y': loc.y}
+        {'id': str(loc['_id']), 'name': loc['name'], 'x': loc['x'], 'y': loc['y']}
         for loc in locs
     ])
 
 # --- Add or Update Locations for a Floor ---
 @app.route('/admin/locations/<floor>', methods=['POST'])
 def save_locations(floor):
-    data = request.get_json()  # [{'id':..., 'name':..., 'x':..., 'y':...}, ...]
-    # Remove all for this floor and re-add
-    Location.query.filter_by(floor=floor).delete()
+    data = request.get_json()  # [{'name':..., 'x':..., 'y':...}, ...]
+    db.locations.delete_many({'floor': floor})
     for loc in data:
-        db.session.add(Location(floor=floor, name=loc['name'], x=loc['x'], y=loc['y']))
-    db.session.commit()
+        db.locations.insert_one({'floor': floor, 'name': loc['name'], 'x': loc['x'], 'y': loc['y']})
     return jsonify({'success': True})
 
 # --- Edit Location ---
-@app.route('/admin/location/<int:loc_id>', methods=['PUT'])
+@app.route('/admin/location/<loc_id>', methods=['PUT'])
 def edit_location(loc_id):
     data = request.get_json()
-    loc = Location.query.get(loc_id)
-    if not loc:
+    result = db.locations.update_one(
+        {'_id': ObjectId(loc_id)},
+        {'$set': {'name': data.get('name'), 'x': data.get('x'), 'y': data.get('y')}}
+    )
+    if result.matched_count == 0:
         return jsonify({'error': 'Location not found'}), 404
-    loc.name = data.get('name', loc.name)
-    loc.x = data.get('x', loc.x)
-    loc.y = data.get('y', loc.y)
-    db.session.commit()
     return jsonify({'success': True})
 
 # --- Delete Location ---
-@app.route('/admin/location/<int:loc_id>', methods=['DELETE'])
+@app.route('/admin/location/<loc_id>', methods=['DELETE'])
 def delete_location(loc_id):
-    loc = Location.query.get(loc_id)
-    if not loc:
+    result = db.locations.delete_one({'_id': ObjectId(loc_id)})
+    if result.deleted_count == 0:
         return jsonify({'error': 'Location not found'}), 404
-    db.session.delete(loc)
-    db.session.commit()
     return jsonify({'success': True})
 
-# --- Existing getlocation endpoint ---
-@app.route('/getlocation', methods=['POST'])
-def get_location():
-    data = request.get_json()
-    df_test = pd.DataFrame(data)
-    df_test['BSSID'] = df_test['BSSID'].astype(str).str.strip().str.lower()
-    feature = [df_test.set_index('BSSID').get('Signal Strength dBm').get(bssid, -100) for bssid in all_bssids]
-    y_pred = knn.predict([feature])
-    return jsonify([{"predicted": y_pred[0]}])
-
-#working on hello endpoint
-@app.route('/getHello', methods=['POST'])
-def get():
-    return jsonify([{"predicted": "Hello from Flask"}])
-
-#working on test data endpoint
+# --- Test Data Endpoint (unchanged, still reads from CSV) ---
 @app.route('/admin/testdata', methods=['GET'])
 def get_test_data():
-    # Return test data from test.csv as JSON
     try:
         df_test = pd.read_csv('test.csv')
-        # Optionally preprocess as in training
         df_test['BSSID'] = df_test['BSSID'].astype(str).str.strip().str.lower()
         if 'Location' in df_test.columns:
             df_test['Location'] = df_test['Location'].astype(str).str.strip().str.lower()
-        # Convert to list of dicts
         data = df_test.to_dict(orient='records')
         return jsonify(data)
     except Exception as e:

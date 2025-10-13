@@ -5,4 +5,5 @@ scikit-learn
 joblib
 gunicorn
 flask_sqlalchemy
-
+pymongo 
+gridfs
