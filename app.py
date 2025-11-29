@@ -1,11 +1,11 @@
 import os
-import pandas as pd
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from pymongo import MongoClient
 import gridfs
 from bson import ObjectId
 from io import BytesIO
+import pandas as pd
 
 app = Flask(__name__)
 CORS(app)
@@ -15,10 +15,6 @@ mongo_url = "mongodb+srv://selva:selva2004@cluster0.wo0nx.mongodb.net/"
 client = MongoClient(mongo_url)
 db = client['findmyway']
 fs = gridfs.GridFS(db)
-
-# --- Location Model in MongoDB ---
-# Collection: locations
-# Fields: floor, name, x, y
 
 # --- Upload Map for a Floor ---
 @app.route('/admin/upload_map/<floor>', methods=['POST'])
@@ -60,7 +56,12 @@ def save_locations(floor):
     data = request.get_json()  # [{'name':..., 'x':..., 'y':...}, ...]
     db.locations.delete_many({'floor': floor})
     for loc in data:
-        db.locations.insert_one({'floor': floor, 'name': loc['name'], 'x': loc['x'], 'y': loc['y']})
+        db.locations.insert_one({
+            'floor': floor,
+            'name': loc['name'],
+            'x': loc['x'],
+            'y': loc['y']
+        })
     return jsonify({'success': True})
 
 # --- Edit Location ---
@@ -83,7 +84,7 @@ def delete_location(loc_id):
         return jsonify({'error': 'Location not found'}), 404
     return jsonify({'success': True})
 
-# --- Test Data Endpoint (unchanged, still reads from CSV) ---
+# --- Test Data Endpoint ---
 @app.route('/admin/testdata', methods=['GET'])
 def get_test_data():
     try:
@@ -96,7 +97,10 @@ def get_test_data():
     except Exception as e:
         return jsonify({'error': str(e)}), 404
 
-# REMOVE app.run() for production!
+# --- Health Check ---
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({'status': 'ok'}), 200
 
-# if __name__ == '__main__':
-#     app.run(debug=True, host='0.0.0.0', port=5000)
+if __name__ == '__main__':
+    app.run(debug=False)
