@@ -5,7 +5,8 @@ from pymongo import MongoClient
 import gridfs
 from bson import ObjectId
 from io import BytesIO
-import pandas as pd
+import csv
+import math
 
 app = Flask(__name__)
 CORS(app)
@@ -84,18 +85,41 @@ def delete_location(loc_id):
         return jsonify({'error': 'Location not found'}), 404
     return jsonify({'success': True})
 
-# --- Test Data Endpoint ---
+# --- Test Data Endpoint (CSV reader, no pandas) ---
 @app.route('/admin/testdata', methods=['GET'])
 def get_test_data():
     try:
-        df_test = pd.read_csv('test.csv')
-        df_test['BSSID'] = df_test['BSSID'].astype(str).str.strip().str.lower()
-        if 'Location' in df_test.columns:
-            df_test['Location'] = df_test['Location'].astype(str).str.strip().str.lower()
-        data = df_test.to_dict(orient='records')
-        return jsonify(data)
+        rows = []
+        with open('test.csv', newline='', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for r in reader:
+                # trim strings and normalize keys
+                row = {k: (v.strip() if isinstance(v, str) else v) for k, v in r.items()}
+                # normalize BSSID and Location to lowercase strings
+                if 'BSSID' in row and row['BSSID'] is not None:
+                    row['BSSID'] = str(row['BSSID']).strip().lower()
+                if 'Location' in row and row['Location'] is not None:
+                    row['Location'] = str(row['Location']).strip().lower()
+                # try to convert numeric fields where applicable
+                for num_key in ['Bandwidth MHz', 'Estimated Distance m', 'Frequency MHz', 'Signal Strength dBm']:
+                    if num_key in row and row[num_key] not in (None, ''):
+                        try:
+                            # prefer int when possible
+                            if '.' in row[num_key]:
+                                val = float(row[num_key])
+                            else:
+                                val = int(row[num_key])
+                            if isinstance(val, float) and (math.isfinite(val) is False):
+                                raise ValueError
+                            row[num_key] = val
+                        except Exception:
+                            pass
+                rows.append(row)
+        return jsonify(rows)
+    except FileNotFoundError:
+        return jsonify({'error': 'test.csv not found'}), 404
     except Exception as e:
-        return jsonify({'error': str(e)}), 404
+        return jsonify({'error': str(e)}), 500
 
 # --- Health Check ---
 @app.route('/health', methods=['GET'])
