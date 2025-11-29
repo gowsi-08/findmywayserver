@@ -7,5 +7,4 @@ gunicorn==21.2.0
 pymongo==4.5.0
 python-dotenv==1.0.0
 Werkzeug==2.3.7
-gridfs==3.12.0
 dnspython==2.4.2
