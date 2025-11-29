@@ -12,7 +12,7 @@ app = Flask(__name__)
 CORS(app)
 
 # --- MongoDB Setup ---
-mongo_url = "mongodb+srv://selva:selva2004@cluster0.wo0nx.mongodb.net/"
+mongo_url = "mongodb+srv://gowsalyaanantharaj:gowsimongodb@cluster1.zh9gr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1"
 client = MongoClient(mongo_url)
 db = client['findmyway']
 fs = gridfs.GridFS(db)
